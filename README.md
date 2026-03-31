@@ -201,7 +201,7 @@ preds = rc.predict(X_test, Y_init=y_train[-3:], n_lags=3)
 
 ```
 reserBUGS/
-│
+├── pyproject.toml
 ├── src/
 │   └── reserbugs/
 │       ├── __init__.py
