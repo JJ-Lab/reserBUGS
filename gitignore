@@ -31,7 +31,7 @@ ENV/
 # =========================
 # Outputs (generated files)
 # =========================
-outputs/*
+outputs/**
 !outputs/.gitkeep
 
 # If you keep results/ instead:
@@ -47,15 +47,6 @@ results/*
 
 # Keep sample data if you include it
 # !data/sample/
-
-# =========================
-# Figures (if generated)
-# =========================
-# If figures are outputs, they should already be ignored via outputs/
-# Otherwise uncomment:
-# figures/*.png
-# figures/*.jpg
-# figures/*.pdf
 
 # =========================
 # Logs & temporary files
@@ -81,3 +72,21 @@ Thumbs.db
 # =========================
 *.swp
 *~
+
+# =========================
+# Testing / coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Type checking (optional)
+# =========================
+.mypy_cache/
+
+# =========================
+# Python environment extras
+# =========================
+.env.*
+.python-version
