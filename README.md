@@ -206,9 +206,18 @@ reserBUGS/
 │   └── reserbugs/
 │       ├── __init__.py
 │       ├── data/
+│       │   ├── __init__.py
+│       │   ├── copernicus.py
+│       │   └── modis.py
 │       ├── evaluation/
+│       │   ├── __init__.py
+│       │   └── error_evaluation.py
 │       ├── visualization/
+│       │   ├── __init__.py
+│       │   └── visualizations.py
 │       └── reservoir_computing/
+│           ├── __init__.py
+│           └── reservoir_computing.py
 │
 ├── notebooks/
 │   ├── Example_biotime.ipynb
@@ -226,6 +235,11 @@ reserBUGS/
 │   └── predictions/
 │
 ├── tests/
+│   ├── conftest.py
+│   ├── test_error_evaluation.py
+│   └── test_reservoir_computing.py
+│
+├── LICENSE
 ├── environment.yml
 └── README.md
 ```
