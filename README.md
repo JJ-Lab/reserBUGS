@@ -191,6 +191,9 @@ print(scores.head())
 
 - For a full workflow (including visualization and data preparation), see:
 `notebooks/Example_biotime.ipynb`
+- The example above retrieves monthly environmental data and aggregates it to annual values.
+- For daily data retrieval, see:  
+  `notebooks/Example_daily_data_retriever.ipynb`
 - If you use more than one lag, adapt the example as follows (e.g. 3 lags):
 
 ```python
