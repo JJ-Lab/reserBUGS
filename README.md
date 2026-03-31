@@ -67,7 +67,9 @@ The tool is based on reservoir computing, a modelling approach well suited for e
 - Built-in forecast evaluation metrics:
   - Type S error (direction)
   - Type M error (magnitude)
-  - CRPS, DSS, Interval Score
+  - CRPS (Continuous Ranked Probability Score)
+  - DSS (Dawid–Sebastiani Score)
+  - Interval Score
 
 ---
 
