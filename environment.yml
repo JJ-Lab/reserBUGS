@@ -1,4 +1,4 @@
-name: reserBUGS_clean
+name: reserBUGS
 channels:
   - conda-forge
 
