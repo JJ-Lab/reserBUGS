@@ -92,8 +92,11 @@ This example follows the same workflow as the `Example_biotime.ipynb` notebook:
 - generate forecasts
 - evaluate forecast performance
 
+> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`, see below). If you are working directly from the repository without installation, you may need to add `src/` to your Python path.
+
 ```python
 import pandas as pd
+import numpy as np
 
 from reserbugs.reservoir_computing import ReservoirComputing
 from reserbugs.evaluation import (
@@ -409,42 +412,75 @@ config = ModisRetrieverConfig(
 
 ------------------------------------------------------------------------
 
-### Minimal MODIS Test
+### Minimal MODIS Workflow
 
-``` python
+This example retrieves MODIS NDVI values for a site. It first downloads Copernicus climate data to create the required `climate_data` table.
+
+> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`).
+
+```python
 from pathlib import Path
-from reserbugs.data import ModisRetriever, ModisRetrieverConfig
 
+from reserbugs.data import CopernicusDataRetriever, ModisDataRetriever, ModisRetrieverConfig
+
+values_dict = {
+    "AmazonForest": {
+        "latitude": -3.5,
+        "longitude": -62.0,
+        "min_year": 2020,
+        "max_year": 2021,
+    }
+}
+
+# ---------------------------------------------------------------------
+# Step 1: Retrieve Copernicus climate data
+# ---------------------------------------------------------------------
+values_dict = CopernicusDataRetriever(values_dict).retrieve_data()
+
+# ---------------------------------------------------------------------
+# Step 2: Configure MODIS retrieval
+# ---------------------------------------------------------------------
 config = ModisRetrieverConfig(
-    local_path=Path("data/modis_test"),
+    local_path=Path("data/modis"),
     auth_strategy="interactive",
+    cleanup_downloads=True,
+    cleanup_only_hdf=False,
 )
 
-retriever = ModisRetriever(config)
-
-data = retriever.get_data(
-    product="MOD13Q1",
-    start_date="2020-01-01",
-    end_date="2020-01-31",
-    bbox=[-3.7, 40.3, -3.6, 40.4]
+# ---------------------------------------------------------------------
+# Step 3: Retrieve MODIS NDVI values
+# ---------------------------------------------------------------------
+modis = ModisDataRetriever(
+    values_dict,
+    config=config,
+    copy_input=True,
 )
 
-print(data.head())
+values_with_ndvi = modis.retrieve_data()
+
+# ---------------------------------------------------------------------
+# Step 4: Inspect the downloaded NDVI information
+# ---------------------------------------------------------------------
+for site in values_with_ndvi:
+    df = values_with_ndvi[site]["climate_data"]
+    print(f"\\n{site}")
+    print(df[["valid_time", "NDVI"]].head(12))
+    print("min NDVI:", df["NDVI"].min())
+    print("max NDVI:", df["NDVI"].max())
 ```
 
 **Expected result:**
 
--   Browser login (first run)\
--   Files downloaded in `data/modis_test`\
--   A table (DataFrame) is printed in the console
+- Earthdata authentication is requested (depending on `auth_strategy`)
+- Each site's `climate_data` table is updated with an `NDVI` column
+- A preview of `valid_time` and `NDVI` values is printed
 
 ---
 
 ### Notes
 
-- External data retrieval is demonstrated in:
-  - `notebooks/Example_NDVI.ipynb`
-  - `notebooks/Example_daily_data_retriever.ipynb`
+- External data retrieval from MODIS is demonstrated in:  
+  `notebooks/Example_NDVI.ipynb`
 - First-time MODIS access may require browser authentication.
 
 ---
