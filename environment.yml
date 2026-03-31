@@ -1,0 +1,47 @@
+name: reserBUGS_clean
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.12
+  - pip
+
+  # Core
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+
+  # Visualization
+  - matplotlib
+  - seaborn
+  - plotly
+
+  # Jupyter
+  - jupyterlab
+  - notebook
+  - ipykernel
+  - ipywidgets
+
+  # Climate / IO
+  - netcdf4
+  - xarray
+  - pyhdf
+
+  # Utilities
+  - joblib
+  - threadpoolctl
+  - python-dateutil
+
+  # PROJ stack (explicit)
+  - pyproj
+  - proj
+  - proj-data
+
+  # BLAS (avoid MKL/OpenMP conflicts)
+  - libblas=*=*openblas
+
+  - pip:
+      - cdsapi
+      - earthaccess
+      - reservoirpy==0.3.13.post1

@@ -1,0 +1,83 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Conda / environments
+# =========================
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Do NOT ignore environment.yml
+# (important for reproducibility)
+
+# =========================
+# Jupyter Notebooks
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Outputs (generated files)
+# =========================
+outputs/*
+!outputs/.gitkeep
+
+# If you keep results/ instead:
+results/*
+!results/.gitkeep
+
+# =========================
+# Data (optional handling)
+# =========================
+# Ignore large raw data if needed
+# data/raw/*
+# data/processed/*
+
+# Keep sample data if you include it
+# !data/sample/
+
+# =========================
+# Figures (if generated)
+# =========================
+# If figures are outputs, they should already be ignored via outputs/
+# Otherwise uncomment:
+# figures/*.png
+# figures/*.jpg
+# figures/*.pdf
+
+# =========================
+# Logs & temporary files
+# =========================
+*.log
+*.tmp
+*.temp
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Misc
+# =========================
+*.swp
+*~
