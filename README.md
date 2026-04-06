@@ -490,7 +490,7 @@ for site in values_with_ndvi:
 
 ## Citation
 
-If you use **reserBUGS**, please cite the ANTENNA project and the associated paper (in preparation).
+If you use **reserBUGS**, please cite the associated paper (in preparation).
 
 A formal citation will be provided here once available.
 
