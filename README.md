@@ -317,6 +317,10 @@ reserBUGS supports:
 
 -   Copernicus Climate Data Store (ERA5)
 -   NASA Earthdata (MODIS)
+  
+> **Note**\
+> External datasets (Copernicus, NASA) are subject to their own licences and attribution requirements.  
+> See **Data Sources and Licensing** below.
 
 ------------------------------------------------------------------------
 
@@ -485,21 +489,100 @@ for site in values_with_ndvi:
 - External data retrieval from MODIS is demonstrated in:  
   `notebooks/Example_NDVI.ipynb`
 - First-time MODIS access may require browser authentication.
+- External datasets (Copernicus, NASA) are subject to their own licences and attribution requirements (See **Data Sources and Licensing** below).
+
+---
+
+## Data Sources and Licensing
+
+reserBUGS provides utilities to retrieve environmental data from external services.
+These data are **not part of this package** and are subject to their own licenses and terms of use.
+
+### Copernicus Climate Data Store (ERA5)
+
+Climate data retrieved via the Copernicus Climate Data Store (CDS) are provided
+by the Copernicus Climate Change Service (C3S).
+
+Use of these data is subject to the Copernicus licence, which allows free use,
+distribution, and modification, including for commercial purposes, provided that
+proper attribution is given.
+
+When publishing or redistributing results based on these data, users should include:
+
+> Generated using Copernicus Climate Change Service information [YEAR]
+
+If the data have been modified or processed:
+
+> Contains modified Copernicus Climate Change Service information [YEAR]
+
+Additionally, users should include the following disclaimer:
+
+> Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data contained herein.
+
+More information:
+https://cds.climate.copernicus.eu/licences
+
+---
+
+### NASA Earthdata (MODIS NDVI – MOD13A3)
+
+This package retrieves NDVI data from the MODIS product:
+
+- **MOD13A3 – Monthly Vegetation Indices (NDVI), 1 km resolution**
+- Collection: 061
+- Provider: NASA LP DAAC (Land Processes Distributed Active Archive Center)
+
+MODIS data are distributed by NASA Earthdata and are generally free and open
+to use. However, users are responsible for properly citing the dataset in any
+scientific or public use of results derived from these data.
+
+Recommended citation:
+
+> Didan, K. (2015). MOD13A3 MODIS/Terra Vegetation Indices Monthly L3 Global 1km SIN Grid V006. NASA EOSDIS Land Processes DAAC. https://doi.org/10.5067/MODIS/MOD13A3.006
+
+Users are encouraged to consult the official dataset documentation for
+additional citation guidelines and product details.
+
+---
+
+### User Responsibility
+
+By using reserBUGS to download or process external data, you agree to comply with
+the corresponding data providers’ terms and conditions.
+
+reserBUGS does not redistribute Copernicus or NASA datasets by default.
 
 ---
 
 ## Citation
 
-If you use **reserBUGS**, please cite the associated paper (in preparation).
+If you use **reserBUGS**, please cite the software:
 
-A formal citation will be provided here once available.
+> reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*.  
+> Zenodo. https://doi.org/XXXX
+
+A formal publication describing the method is currently in preparation and will be added here once available.
 
 ---
+
+### Example datasets
 
 If you use BioTIME data, please cite:
 
 Dornelas, M. et al. (2025). **BioTIME 2.0: Expanding and Improving a Database of Biodiversity Time Series.** *Global Ecology and Biogeography*, 34(5), e70003.  
 https://doi.org/10.1111/geb.70003
+
+---
+
+### Data sources
+
+If your work relies on environmental data retrieved via reserBUGS,
+please also cite the corresponding data providers, such as:
+
+- Copernicus Climate Change Service (ERA5)
+- NASA LP DAAC (MODIS MOD13A3)
+
+Refer to the **Data Sources and Licensing** section for recommended citations.
 
 ---
 
