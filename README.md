@@ -292,8 +292,6 @@ conda activate reserBUGS
 
 The required Python packages are listed in `environment.yml`.
 
-------------------------------------------------------------------------
-
 > **Note**\
 > External data access (Copernicus, MODIS) is optional and not required
 > for the Quick Start example.
@@ -548,8 +546,7 @@ reserBUGS does not redistribute Copernicus or NASA datasets by default.
 
 If you use **reserBUGS**, please cite the software:
 
-> reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*.  
-> Zenodo. https://doi.org/XXXX
+> reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*. Zenodo. https://doi.org/XXXX
 
 A formal publication describing the method is currently in preparation and will be added here once available.
 
