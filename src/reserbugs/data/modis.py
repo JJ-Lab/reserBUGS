@@ -504,26 +504,6 @@ class ModisDataRetriever:
         if not path.is_file():
             raise ModisFileValidationError(f"Expected a file but got: {path}")
         return path
-
-    # TODO: Eliminar método de limpieza para manejarlo con directorios temporales
-    def cleanup_downloads(self, tmpdir: str) -> None:
-        """Delete downloaded MODIS files from the local download directory."""
-        # local_path = Path(self.config.local_path).expanduser().resolve()
-    
-        if not local_path.exists():
-            return
-    
-        if getattr(self.config, "cleanup_only_hdf", True):
-            for file_path in local_path.glob("*.hdf"):
-                try:
-                    file_path.unlink()
-                except Exception:
-                    self.logger.warning("Could not delete file %s", file_path, exc_info=True)
-        else:
-            try:
-                shutil.rmtree(local_path)
-            except Exception:
-                self.logger.warning("Could not remove directory %s", local_path, exc_info=True)
     
     
     def _extract_tile_indices(self, file_path: Path) -> Optional[tuple[int, int]]:
