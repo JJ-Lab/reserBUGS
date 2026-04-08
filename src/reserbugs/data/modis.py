@@ -43,6 +43,7 @@ from __future__ import annotations
 import copy
 import logging
 import re
+import tempfile
 import shutil
 from dataclasses import dataclass
 from datetime import datetime
@@ -54,6 +55,7 @@ import numpy as np
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 from pyproj import Transformer
+
 
 
 LOGGER = logging.getLogger(__name__)
@@ -77,6 +79,7 @@ class ModisRetrieverConfig:
 
     short_name: str = "MOD13A3"
     version: str = "061"
+    # TODO: Eliminar ruta por defecto y plantear ruta temporal.
     local_path: Path = Path("modis_data")
     dataset_name: str = "1 km monthly NDVI"
     auth_strategy: str = "netrc"
@@ -200,13 +203,21 @@ class ModisDataRetriever:
                 longitude = float(site_info["longitude"])
                 min_year = int(site_info["min_year"])
                 max_year = int(site_info["max_year"])
+
     
                 for current in self._iter_month_starts(min_year=min_year, max_year=max_year):
+                    
+                    # Temporal directory
+                    tmpdir = tempfile.mkdtemp(prefix="tmp_", dir=self.config.local_path.parent)
+                    self.logger.debug("Created temporary directory for downloads: %s", tmpdir)
+                    
                     files = self.download_month(
                         latitude=latitude,
                         longitude=longitude,
                         current=current,
+                        tmpdir=tmpdir,  
                     )
+
                     if not files:
                         self.logger.debug("No MODIS files found for %s at %s", site_name, current.date())
                         continue
@@ -216,14 +227,19 @@ class ModisDataRetriever:
                         ndvi_value = self.process_hdf(file_path, latitude, longitude)
                         self.logger.info("File: %s, NDVI Value: %s", file_path, ndvi_value)
                         climate_df.loc[climate_df["valid_time"] == current_string, "NDVI"] = ndvi_value
+
+                    if self.config.cleanup_downloads:
+                        shutil.rmtree(tmpdir)
+                    
     
                 self.values_dict[site_name]["climate_data"] = climate_df
     
             return self.values_dict
+        
+        except Exception as exc:
+            self.logger.error("An error occurred during MODIS data retrieval", exc_info=True)
+            raise exc
     
-        finally:
-            if self.config.cleanup_downloads:
-                self.cleanup_downloads()
 
     def login(self) -> Any:
         """Authenticate with Earthdata using the configured strategy."""
@@ -295,7 +311,7 @@ class ModisDataRetriever:
             results = results[: self.config.max_results_per_month]
         return results
 
-    def download_month(self, *, latitude: float, longitude: float, current: datetime) -> List[Path]:
+    def download_month(self, *, latitude: float, longitude: float, current: datetime, tmpdir: str) -> List[Path]:
         """
         Search for and download MODIS files for a single month.
     
@@ -324,7 +340,7 @@ class ModisDataRetriever:
         - Files are downloaded into ``config.local_path``.
         - The local directory is created automatically if it does not exist.
         - Each returned file path is checked to ensure that it exists and refers
-          to a regular file.
+          to a regularsys.path.append(str(Path().resolve().parent / "src")) file.
         - Validation of filename contents beyond file existence is handled later
           during HDF processing.
     
@@ -340,7 +356,9 @@ class ModisDataRetriever:
         >>> files = retriever.download_month(
         ...     latitude=-34.60,
         ...     longitude=-58.38,
-        ...     current=datetime(2020, 1, 1),
+        ...     current=datetime(2020,         finally:
+            if self.config.cleanup_downloads:
+                self.cleanup_downloads(tempfile.tempdir)1, 1),
         ... )
         >>> files[0]
         PosixPath('...')
@@ -349,12 +367,9 @@ class ModisDataRetriever:
         if not results:
             return []
 
-        local_path = self.config.local_path.expanduser().resolve()
-        local_path.mkdir(parents=True, exist_ok=True)
-
-        files = earthaccess.download(results, local_path=str(local_path))
+        files = earthaccess.download(results, local_path=str(tmpdir))
         downloaded = [self._validate_local_file_path(file_path) for file_path in files]
-        self.logger.debug("Downloaded %d files into %s", len(downloaded), local_path)
+        self.logger.debug("Downloaded %d files into %s", len(downloaded), tmpdir)
         return downloaded
 
     def process_hdf(self, file_path: str | Path, latitude: float, longitude: float) -> float:
@@ -490,10 +505,10 @@ class ModisDataRetriever:
             raise ModisFileValidationError(f"Expected a file but got: {path}")
         return path
 
-    
-    def cleanup_downloads(self) -> None:
+    # TODO: Eliminar método de limpieza para manejarlo con directorios temporales
+    def cleanup_downloads(self, tmpdir: str) -> None:
         """Delete downloaded MODIS files from the local download directory."""
-        local_path = Path(self.config.local_path).expanduser().resolve()
+        # local_path = Path(self.config.local_path).expanduser().resolve()
     
         if not local_path.exists():
             return
