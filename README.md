@@ -2,7 +2,7 @@
 
 ![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![Status](https://img.shields.io/badge/status-active-success.svg)
+![Status](https://img.shields.io/badge/status-beta-yellow.svg)
 
 reserBUGS is a forecasting tool developed within the ANTENNA research project to support ecological forecasting of pollinator populations, especially insects.
 
@@ -82,6 +82,23 @@ The tool is based on reservoir computing, a modelling approach well suited for e
 
 ---
 
+## Minimal example
+
+Run a simple reservoir computing model on synthetic data:
+
+```python
+from reserbugs import ReservoirComputing
+import numpy as np
+
+X = np.random.rand(50, 2)
+y = np.random.rand(50)
+
+rc = ReservoirComputing()
+rc.fit(X, y)
+```
+
+---
+
 ## Quick Start (BioTIME-style workflow)
 
 This example follows the same workflow as the `Example_biotime.ipynb` notebook:
@@ -98,7 +115,7 @@ This example follows the same workflow as the `Example_biotime.ipynb` notebook:
 import pandas as pd
 import numpy as np
 
-from reserbugs.reservoir_computing import ReservoirComputing
+from reserbugs import ReservoirComputing
 from reserbugs.evaluation import (
     type_s_error,
     type_m_error,
@@ -254,18 +271,28 @@ reserBUGS/
 
 ## Installation
 
-Follow these steps to install the package.
+### Install from PyPI (once published)
 
-### 1. Clone the repository
+```bash
+pip install reserbugs
+```
+
+This option will be available after the first public release on PyPI.
+
+---
+
+### Install from source (recommended for development and advanced users)
+
+#### 1. Clone the repository
 
 ``` bash
-git clone https://github.com/your-username/reserBUGS.git
+git clone https://github.com/JJ-Lab/reserBUGS.git
 cd reserBUGS
 ```
 
-------------------------------------------------------------------------
+---
 
-### 2. Install the package (recommended)
+#### 2. Install the package (recommended)
 
 Install in editable mode:
 
@@ -281,21 +308,23 @@ from reserbugs.data import CopernicusDataRetriever
 
 ------------------------------------------------------------------------
 
-### 3. (Optional) Create a Conda environment
+#### 3. (Optional) Create a Conda environment
 
-If you prefer using Conda:
+For full compatibility with geospatial and remote sensing dependencies, we recommend using the provided Conda environment:
 
-``` bash
+```bash
 conda env create -f environment.yml
 conda activate reserBUGS
 ```
 
 The required Python packages are listed in `environment.yml`.
 
-> **Note**\
-> External data access (Copernicus, MODIS) is optional and not required
-> for the Quick Start example.
+> **Note**  
+> External data access (Copernicus, MODIS) is optional at the usage level.  
+> All required Python dependencies are installed with the package, but external services require user credentials and configuration.
 
+> **Note on MODIS / HDF support**
+> The MODIS workflow requires the `pyhdf` library, which may be easier to install using Conda (`conda-forge`) rather than pip, depending on your system.
 ------------------------------------------------------------------------
 
 ## Platform Support
