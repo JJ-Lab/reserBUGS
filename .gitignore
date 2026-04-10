@@ -1,0 +1,92 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Conda / environments
+# =========================
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Do NOT ignore environment.yml
+# (important for reproducibility)
+
+# =========================
+# Jupyter Notebooks
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Outputs (generated files)
+# =========================
+outputs/**
+!outputs/.gitkeep
+
+# If you keep results/ instead:
+results/*
+!results/.gitkeep
+
+# =========================
+# Data (optional handling)
+# =========================
+# Ignore large raw data if needed
+# data/raw/*
+# data/processed/*
+
+# Keep sample data if you include it
+# !data/sample/
+
+# =========================
+# Logs & temporary files
+# =========================
+*.log
+*.tmp
+*.temp
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Misc
+# =========================
+*.swp
+*~
+
+# =========================
+# Testing / coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Type checking (optional)
+# =========================
+.mypy_cache/
+
+# =========================
+# Python environment extras
+# =========================
+.env.*
+.python-version
