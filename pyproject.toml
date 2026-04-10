@@ -6,20 +6,68 @@ build-backend = "setuptools.build_meta"
 name = "reserbugs"
 version = "0.1.0"
 description = "Reservoir computing-based ecological forecasting tool"
-authors = [
-    { name = "reserBUGS contributors" }
-]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+
+authors = [
+  { name = "Miguel Ángel Muñoz" },
+  { name = "Alfonso Allen-Perkins" },
+  { name = "Juan Manuel Pastor" },
+  { name = "Javier Galeano" },
+  { name = "Julia G. de Aledo" },
+  { name = "Ignasi Bartomeus" }
+]
+
+keywords = [
+  "ecological forecasting",
+  "reservoir computing",
+  "time series",
+  "biodiversity",
+  "remote sensing",
+  "copernicus",
+  "modis"
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Information Analysis"
+]
 
 dependencies = [
-    "numpy",
-    "pandas",
-    "scikit-learn",
-    "reservoirpy",
-    "joblib",
-    "threadpoolctl"
+  "numpy",
+  "pandas",
+  "scipy",
+  "scikit-learn",
+  "reservoirpy",
+  "joblib",
+  "threadpoolctl",
+  "plotly",
+  "cdsapi",
+  "xarray",
+  "netcdf4",
+  "earthaccess",
+  "python-dateutil",
+  "pyproj",
+  "pyhdf"
 ]
+
+[project.optional-dependencies]
+scoring = [
+  "properscoring"
+]
+
+[project.urls]
+Repository = "https://github.com/JJ-Lab/reserBUGS"
+Issues = "https://github.com/JJ-Lab/reserBUGS/issues"
+Homepage = "https://github.com/JJ-Lab/reserBUGS"
 
 [tool.setuptools.packages.find]
 where = ["src"]
