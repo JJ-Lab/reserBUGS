@@ -323,15 +323,22 @@ The required Python packages are listed in `environment.yml`.
 > External data access (Copernicus, MODIS) is optional at the usage level.  
 > All required Python dependencies are installed with the package, but external services require user credentials and configuration.
 
-> **Note on MODIS / HDF support**
+> **Note on MODIS / HDF support**  
 > The MODIS workflow requires the `pyhdf` library, which may be easier to install using Conda (`conda-forge`) rather than pip, depending on your system.
 ------------------------------------------------------------------------
 
 ## Platform Support
 
-- **Windows**: fully supported in the current workflow
-- **macOS**: expected to behave similarly to Windows, but the NDVI workflow has not yet been fully validated
-- **Linux**: some functions currently require platform-specific modifications
+reserBUGS has been tested and runs on:
+
+- **Windows**
+- **macOS**
+- **Linux**
+
+All core functionalities, including data retrieval and forecasting workflows, are supported across these platforms.
+
+> **Note**  
+> Some external dependencies (e.g. geospatial or HDF libraries) may require additional system configuration depending on the environment. Using the provided Conda environment is recommended for maximum compatibility.
 
 ------------------------------------------------------------------------
 
