@@ -1,0 +1,42 @@
+site_name: reserBUGS
+site_description: Reservoir computing-based ecological forecasting tool
+site_url: https://jj-lab.github.io/reserBUGS/
+repo_url: https://github.com/JJ-Lab/reserBUGS
+repo_name: JJ-Lab/reserBUGS
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Quick Start: quickstart.md
+  - Examples: examples.md
+  - External Data: external-data.md
+  - API Reference: api.md
+  - Citation: citation.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths:
+            - src
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - toc:
+      permalink: true

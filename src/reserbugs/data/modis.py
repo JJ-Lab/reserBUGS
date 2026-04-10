@@ -153,20 +153,20 @@ class ModisDataRetriever:
         6. writes the result into the ``NDVI`` column of the site's climate table.
     
         The updated climate tables are written back into ``self.values_dict`` under
-        each site's ``"climate_data"`` key.
+        each site's climate_data key.
     
         Returns
         -------
         dict of dict
             Updated site dictionary with NDVI values added to each site's
-            ``climate_data`` DataFrame.
+            climate_data DataFrame.
     
         Notes
         -----
         - The method expects each site entry in ``values_dict`` to contain:
           ``"latitude"``, ``"longitude"``, ``"min_year"``, ``"max_year"``, and
-          ``"climate_data"``.
-        - The ``climate_data`` table must contain a ``"valid_time"`` column.
+          climate_data.
+        - The climate_data table must contain a ``"valid_time"`` column.
         - If no files are found for a given month, that month is skipped.
         - If ``config.cleanup_downloads`` is True, downloaded files are deleted
           after processing, even if an error occurs.
@@ -191,7 +191,7 @@ class ModisDataRetriever:
         --------
         >>> retriever = ModisDataRetriever(values_dict)
         >>> updated = retriever.retrieve_data()
-        >>> updated["site_a"]["climate_data"].head()
+        >>> updated.get("site_a").get("climate_data").head()
         """
         self.login()
     

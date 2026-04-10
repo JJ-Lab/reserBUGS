@@ -66,7 +66,7 @@ class CopernicusDataRetriever:
         for all sites defined in `values_dict`.
         
         One CDS request is performed per site. Results are stored in-place under
-        the key `'climate_data'`.
+        the climate_data key.
         
         Parameters
         ----------
@@ -91,7 +91,7 @@ class CopernicusDataRetriever:
         --------
         >>> retriever = CopernicusDataRetriever(values_dict)
         >>> data = retriever.retrieve_data(time_scale="monthly")
-        >>> data["site_a"]["climate_data"].head()
+        >>> data.get("site_a").get("climate_data").head()
         """
 
         for site, site_info in self.values_dict.items(): #for site in self.values_dict.keys():
