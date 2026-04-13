@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/api/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/citation/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/examples/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/external-data/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/installation/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://jj-lab.github.io/reserBUGS/quickstart/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+</urlset>
