@@ -6,6 +6,8 @@ repo_name: JJ-Lab/reserBUGS
 
 theme:
   name: material
+  logo: assets/logo.jpeg
+  favicon: assets/favicon.ico
   features:
     - navigation.sections
     - navigation.indexes
