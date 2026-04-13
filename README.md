@@ -20,25 +20,7 @@ The goal is to:
 - Continuously update predictions as new data become available
 - Identify key environmental drivers affecting biodiversity
 
-More information: https://pollinators-antenna.eu/
-
----
-
-## Authors and Institutions
-
-**Institutions:**
-
-- Universidad Politécnica de Madrid ([UPM](https://www.upm.es/))
-- Estación Biológica de Doñana ([EBD-CSIC](https://www.ebd.csic.es/))
-
-**Contributors:**
-
-- [Miguel Ángel Muñoz](https://orcid.org/0000-0001-6114-4460)
-- [Alfonso Allen-Perkins](https://orcid.org/0000-0003-3547-2190)
-- [Juan Manuel Pastor](https://orcid.org/0000-0002-1067-3642)
-- [Javier Galeano](https://orcid.org/0000-0003-0706-4317)
-- [Julia G. de Aledo](https://orcid.org/0000-0001-9065-9316)
-- [Ignasi Bartomeus](https://orcid.org/0000-0001-7893-4389)
+More information: <https://pollinators-antenna.eu/>
 
 ---
 
@@ -96,6 +78,369 @@ y = np.random.rand(50)
 rc = ReservoirComputing()
 rc.fit(X, y)
 ```
+
+---
+
+## Installation
+
+<!--### Install from PyPI (once published)
+
+```bash
+pip install reserbugs
+```
+
+This option will be available after the first public release on PyPI.
+
+---
+-->
+### Install from source (recommended for development and advanced users)
+
+#### 1. Clone the repository
+
+``` bash
+git clone https://github.com/JJ-Lab/reserBUGS.git
+cd reserBUGS
+```
+
+---
+
+#### 2. Create a Conda environment (Optional but highly recommended for new users)
+
+For full compatibility with geospatial and remote sensing dependencies, we recommend using the provided Conda environment:
+
+```bash
+conda env create -f environment.yml
+conda activate reserBUGS
+```
+
+The required Python packages are listed in `environment.yml`.
+
+> **Note**  
+> External data access (Copernicus, MODIS) is optional at the usage level.  
+> All required Python dependencies are installed with the package, but external services require user credentials and configuration.
+> **Note on MODIS / HDF support**  
+> The MODIS workflow requires the `pyhdf` library, which may be easier to install using Conda (`conda-forge`) rather than pip, depending on your system.
+---
+
+#### 3. Install the package
+
+Install in editable mode:
+
+``` bash
+pip install -e .
+```
+
+This allows you to import:
+
+``` python
+from reserbugs.data import CopernicusDataRetriever
+```
+
+---
+
+## Platform Support
+
+reserBUGS has been tested and runs on:
+
+- **Windows**
+- **macOS**
+- **Linux**
+
+All core functionalities, including data retrieval and forecasting workflows, are supported across these platforms.
+
+---
+
+## External Data Setup (optional)
+
+This section is only needed if you want to retrieve environmental
+variables.
+
+reserBUGS supports:
+
+- Copernicus Climate Data Store (ERA5)
+- NASA Earthdata (MODIS)
+  
+> **Note**\
+> External datasets (Copernicus, NASA) are subject to their own licences and attribution requirements (see **Data Sources and Licensing** below).
+
+---
+
+## Copernicus API (ERA5 Climate Data)
+
+To acquire abiotic data from Copernicus, a valid account is required, along with the configuration of a settings file containing a unique token that enables queries to be made to the API.
+
+### 1. Create an account
+
+1. Go to <https://cds.climate.copernicus.eu/>
+2. Click **Register** and create a new account
+3. Confirm your email address
+4. Log in to your account
+
+---
+
+### 2. Get your API key
+
+1. Visit your profile: <https://cds.climate.copernicus.eu/profile?tab=profile>
+2. Under **API key** section, copy your personal access token (you may need to accept the terms first)
+
+---
+
+### 3. Create the credentials file
+
+Create a new file named `.cdsapirc` in your home directory. The location depends on your operating system:
+
+#### Linux / macOS
+
+Open a terminal and create the file:
+
+``` bash
+nano ~/.cdsapirc
+```
+
+#### Windows
+
+Create the file at:
+
+``` text
+C:\Users\<Username>\.cdsapirc
+```
+
+You can use Notepad or any text editor.
+
+---
+
+### 4. Add your credentials
+
+Paste the following content into your `.cdsapirc` file, replacing `<PERSONAL-ACCESS-TOKEN>` with your API key from Step 2:
+
+``` text
+url: https://cds.climate.copernicus.eu/api
+key: <PERSONAL-ACCESS-TOKEN>
+```
+
+**Important:**
+
+- Keep this file secure – it contains your API credentials
+- Make sure the file has no extension (just `.cdsapirc`, not `.cdsapirc.txt`)
+- **File permissions:**
+  - **Linux/macOS:** Restrict permissions with `chmod 600 ~/.cdsapirc` so only you can read it
+  - **Windows:** Right-click the file → **Properties** → **Security** → **Edit** → Select your user → Ensure only your account has **Full Control**, then remove all other users
+
+---
+
+### Minimal Copernicus Test
+
+``` python
+import cdsapi
+
+cds = cdsapi.Client()
+
+cds.retrieve(
+    'reanalysis-era5-single-levels-monthly-means',
+    {
+        "variable": "2m_temperature",
+        "product_type": ["monthly_averaged_reanalysis"],
+        "year": "1997",
+        "month": "01",
+        "time": ["00:00"],
+        "format": "grib"
+    },
+    "download.grib"
+)
+```
+
+**Expected result:**
+
+- A file named `download.grib` is created in your working directory\
+- The file contains ERA5 climate data (e.g. temperature)\
+<!--
+- No authentication prompt appears (credentials are read from
+    `.cdsapirc`)\
+- The request completes without errors
+-->
+
+---
+
+<!--
+# TODO: Mejorar proceso de explicación
+# Creación de cuenta
+# Mail de confirmacion
+# Enlace a https://urs.earthdata.nasa.gov/profile
+# Applications/Authorized Apps y autorizar desde la web
+# LP DAAC Cumulus PROD
+
+# Creación de .netrc
+
+'''
+(
+echo machine: example.com &
+echo login: USERNAME &
+echo password: PASSWORD 
+) >> "%USERPROFILE%\.netrc2"
+'''
+-->
+
+## MODIS (NDVI) via NASA Earthdata (AppEEARS)
+
+### 1. Create an Earthdata account
+
+1. Go to <https://urs.earthdata.nasa.gov>
+2. Click **Register** and create a new account
+3. Confirm your email address
+4. Log in to your account
+
+---
+
+### 2. Authorize LP DAAC access
+
+1. Visit your profile: <https://urs.earthdata.nasa.gov/profile?tab=profile>
+2. Go to **Applications** → **Authorized Apps**
+3. Search for **LP DAAC Cumulus PROD**
+4. Click **Approve** to grant access to LP DAAC services
+
+---
+
+### 3. Set up authentication for Python
+
+reserBUGS supports two authentication strategies for MODIS data retrieval:
+
+#### Option A: Interactive authentication (recommended for first-time users)
+
+```python
+from pathlib import Path
+from reserbugs.data import ModisRetrieverConfig
+
+config = ModisRetrieverConfig(
+    local_path=Path("data/modis"),
+    auth_strategy="interactive",
+)
+```
+
+When you first access MODIS data, your browser will open automatically for authentication. Follow the prompts to log in with your Earthdata credentials.
+
+#### Option B: Credentials file authentication
+
+For automated workflows, create a `.netrc` file in your home directory:
+
+##### Linux / macOS setup
+
+Open a terminal and create the file:
+
+``` bash
+nano ~/.netrc
+```
+
+##### Windows setup
+
+Create the file at:
+
+``` text
+C:\Users\<Username>\.netrc
+```
+
+---
+
+Add the following content (replace with your Earthdata credentials):
+
+``` text
+machine urs.earthdata.nasa.gov
+login <YOUR-EARTHDATA-USERNAME>
+password <YOUR-EARTHDATA-PASSWORD>
+```
+
+**Important:**
+
+- Keep this file secure – it contains your login credentials
+- Make sure the file has no extension (just `.netrc`, not `.netrc.txt`)
+- **File permissions:**
+  - **Linux/macOS:** Restrict permissions with `chmod 600 ~/.netrc` so only you can read it
+  - **Windows:** Right-click the file → **Properties** → **Security** → **Edit** → Select your user → Ensure only your account has **Full Control**, then remove all other users
+
+---
+
+### Authentication in Python
+
+``` python
+from pathlib import Path
+
+config = ModisRetrieverConfig(
+    local_path=Path("data/modis"),
+    auth_strategy="interactive",
+)
+```
+
+---
+
+### Minimal MODIS Workflow
+
+This example retrieves MODIS NDVI values for a site. It first downloads Copernicus climate data to create the required `climate_data` table.
+
+> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`).
+
+```python
+from pathlib import Path
+
+from reserbugs.data import CopernicusDataRetriever, ModisDataRetriever, ModisRetrieverConfig
+
+values_dict = {
+    "AmazonForest": {
+        "latitude": -3.5,
+        "longitude": -62.0,
+        "min_year": 2020,
+        "max_year": 2021,
+    }
+}
+
+# ---------------------------------------------------------------------
+# Step 1: Retrieve Copernicus climate data
+# ---------------------------------------------------------------------
+values_dict = CopernicusDataRetriever(values_dict).retrieve_data()
+
+# ---------------------------------------------------------------------
+# Step 2: Configure MODIS retrieval
+# ---------------------------------------------------------------------
+config = ModisRetrieverConfig(
+    local_path=Path("data/modis"),
+    auth_strategy="interactive",
+    cleanup_downloads=True,
+    cleanup_only_hdf=False,
+)
+
+# ---------------------------------------------------------------------
+# Step 3: Retrieve MODIS NDVI values
+# ---------------------------------------------------------------------
+modis = ModisDataRetriever(
+    values_dict,
+    config=config,
+    copy_input=True,
+)
+
+values_with_ndvi = modis.retrieve_data()
+
+# ---------------------------------------------------------------------
+# Step 4: Inspect the downloaded NDVI information
+# ---------------------------------------------------------------------
+for site in values_with_ndvi:
+    df = values_with_ndvi[site]["climate_data"]
+    print(f"\\n{site}")
+    print(df[["valid_time", "NDVI"]].head(12))
+    print("min NDVI:", df["NDVI"].min())
+    print("max NDVI:", df["NDVI"].max())
+```
+
+**Expected result:**
+
+- Earthdata authentication is requested (depending on `auth_strategy`)
+- Each site's `climate_data` table is updated with an `NDVI` column
+- A preview of `valid_time` and `NDVI` values is printed
+
+---
+
+### Notes
+
+- External data retrieval from MODIS is demonstrated in:  
+  `notebooks/Example_NDVI.ipynb`
+- First-time MODIS access may require browser authentication.
 
 ---
 
@@ -204,7 +549,7 @@ scores = scoring_rules(
 print(scores.head())
 ```
 
-### Notes
+### Full examples
 
 - For a full workflow (including visualization and data preparation), see:
 `notebooks/Example_biotime.ipynb`
@@ -219,7 +564,7 @@ preds = rc.predict(X_test, Y_init=y_train[-3:], n_lags=3)
 ```
 
 ---
-
+<!--
 ## Repository Structure
 
 ```
@@ -266,263 +611,7 @@ reserBUGS/
 ├── environment.yml
 └── README.md
 ```
-
----
-
-## Installation
-
-### Install from PyPI (once published)
-
-```bash
-pip install reserbugs
-```
-
-This option will be available after the first public release on PyPI.
-
----
-
-### Install from source (recommended for development and advanced users)
-
-#### 1. Clone the repository
-
-``` bash
-git clone https://github.com/JJ-Lab/reserBUGS.git
-cd reserBUGS
-```
-
----
-
-#### 2. Install the package (recommended)
-
-Install in editable mode:
-
-``` bash
-pip install -e .
-```
-
-This allows you to import:
-
-``` python
-from reserbugs.data import CopernicusDataRetriever
-```
-
-------------------------------------------------------------------------
-
-#### 3. (Optional) Create a Conda environment
-
-For full compatibility with geospatial and remote sensing dependencies, we recommend using the provided Conda environment:
-
-```bash
-conda env create -f environment.yml
-conda activate reserBUGS
-```
-
-The required Python packages are listed in `environment.yml`.
-
-> **Note**  
-> External data access (Copernicus, MODIS) is optional at the usage level.  
-> All required Python dependencies are installed with the package, but external services require user credentials and configuration.
-
-> **Note on MODIS / HDF support**  
-> The MODIS workflow requires the `pyhdf` library, which may be easier to install using Conda (`conda-forge`) rather than pip, depending on your system.
-------------------------------------------------------------------------
-
-## Platform Support
-
-reserBUGS has been tested and runs on:
-
-- **Windows**
-- **macOS**
-- **Linux**
-
-All core functionalities, including data retrieval and forecasting workflows, are supported across these platforms.
-
-> **Note**  
-> Some external dependencies (e.g. geospatial or HDF libraries) may require additional system configuration depending on the environment. Using the provided Conda environment is recommended for maximum compatibility.
-
-------------------------------------------------------------------------
-
-## External Data Setup (optional)
-
-This section is only needed if you want to retrieve environmental
-variables.
-
-reserBUGS supports:
-
--   Copernicus Climate Data Store (ERA5)
--   NASA Earthdata (MODIS)
-  
-> **Note**\
-> External datasets (Copernicus, NASA) are subject to their own licences and attribution requirements (see **Data Sources and Licensing** below).
-
-------------------------------------------------------------------------
-
-## Copernicus API (ERA5 Climate Data)
-
-### 1. Register
-
-https://cds.climate.copernicus.eu/
-
-------------------------------------------------------------------------
-
-### 2. Create credentials file
-
-#### Linux / macOS
-
-``` bash
-~/.cdsapirc
-```
-
-#### Windows
-
-``` text
-C:\Users\<Username>\.cdsapirc
-```
-
-------------------------------------------------------------------------
-
-### 3. Add credentials
-
-``` text
-url: https://cds.climate.copernicus.eu/api
-key: <PERSONAL-ACCESS-TOKEN>
-```
-
-------------------------------------------------------------------------
-
-### Minimal Copernicus Test
-
-``` python
-import cdsapi
-
-cds = cdsapi.Client()
-
-cds.retrieve(
-    'reanalysis-era5-single-levels-monthly-means',
-    {
-        "variable": "2m_temperature",
-        "product_type": ["monthly_averaged_reanalysis"],
-        "year": "1997",
-        "month": "01",
-        "time": ["00:00"],
-        "format": "grib"
-    },
-    "download.grib"
-)
-```
-
-**Expected result:**
-
--   A file named `download.grib` is created in your working directory\
--   The file contains ERA5 climate data (e.g. temperature)\
--   No authentication prompt appears (credentials are read from
-    `.cdsapirc`)\
--   The request completes without errors
-
-------------------------------------------------------------------------
-
-## MODIS (NDVI) via NASA Earthdata (AppEEARS)
-
-### 1. Create account
-
-https://urs.earthdata.nasa.gov
-
-### 2. Login to AppEEARS
-
-https://appeears.earthdatacloud.nasa.gov
-
-### 3. Enable access
-
-Ensure access to:
-
--   **LP DAAC (Land Processes Distributed Active Archive Center)**
-
-------------------------------------------------------------------------
-
-### Authentication in Python
-
-``` python
-from pathlib import Path
-
-config = ModisRetrieverConfig(
-    local_path=Path("data/modis"),
-    auth_strategy="interactive",
-)
-```
-
-------------------------------------------------------------------------
-
-### Minimal MODIS Workflow
-
-This example retrieves MODIS NDVI values for a site. It first downloads Copernicus climate data to create the required `climate_data` table.
-
-> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`).
-
-```python
-from pathlib import Path
-
-from reserbugs.data import CopernicusDataRetriever, ModisDataRetriever, ModisRetrieverConfig
-
-values_dict = {
-    "AmazonForest": {
-        "latitude": -3.5,
-        "longitude": -62.0,
-        "min_year": 2020,
-        "max_year": 2021,
-    }
-}
-
-# ---------------------------------------------------------------------
-# Step 1: Retrieve Copernicus climate data
-# ---------------------------------------------------------------------
-values_dict = CopernicusDataRetriever(values_dict).retrieve_data()
-
-# ---------------------------------------------------------------------
-# Step 2: Configure MODIS retrieval
-# ---------------------------------------------------------------------
-config = ModisRetrieverConfig(
-    local_path=Path("data/modis"),
-    auth_strategy="interactive",
-    cleanup_downloads=True,
-    cleanup_only_hdf=False,
-)
-
-# ---------------------------------------------------------------------
-# Step 3: Retrieve MODIS NDVI values
-# ---------------------------------------------------------------------
-modis = ModisDataRetriever(
-    values_dict,
-    config=config,
-    copy_input=True,
-)
-
-values_with_ndvi = modis.retrieve_data()
-
-# ---------------------------------------------------------------------
-# Step 4: Inspect the downloaded NDVI information
-# ---------------------------------------------------------------------
-for site in values_with_ndvi:
-    df = values_with_ndvi[site]["climate_data"]
-    print(f"\\n{site}")
-    print(df[["valid_time", "NDVI"]].head(12))
-    print("min NDVI:", df["NDVI"].min())
-    print("max NDVI:", df["NDVI"].max())
-```
-
-**Expected result:**
-
-- Earthdata authentication is requested (depending on `auth_strategy`)
-- Each site's `climate_data` table is updated with an `NDVI` column
-- A preview of `valid_time` and `NDVI` values is printed
-
----
-
-### Notes
-
-- External data retrieval from MODIS is demonstrated in:  
-  `notebooks/Example_NDVI.ipynb`
-- First-time MODIS access may require browser authentication.
-
+-->
 ---
 
 ## Data Sources and Licensing
@@ -548,7 +637,7 @@ Additionally, users should include the following disclaimer:
 > Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data contained herein.
 
 More information:
-https://cds.climate.copernicus.eu/licences
+<https://cds.climate.copernicus.eu/licences>
 
 ---
 
@@ -564,7 +653,7 @@ MODIS data are distributed by NASA Earthdata and are generally free and open to 
 
 Recommended citation:
 
-> Didan, K. (2015). MOD13A3 MODIS/Terra Vegetation Indices Monthly L3 Global 1km SIN Grid V006. NASA EOSDIS Land Processes DAAC. https://doi.org/10.5067/MODIS/MOD13A3.006
+> Didan, K. (2015). MOD13A3 MODIS/Terra Vegetation Indices Monthly L3 Global 1km SIN Grid V006. NASA EOSDIS Land Processes DAAC. <https://doi.org/10.5067/MODIS/MOD13A3.006>
 
 Users are encouraged to consult the official dataset documentation for additional citation guidelines and product details.
 
@@ -578,13 +667,33 @@ reserBUGS does not redistribute Copernicus or NASA datasets by default.
 
 ---
 
-## Citation
+## Authors and Institutions
 
+**Institutions:**
+
+- Universidad Politécnica de Madrid ([UPM](https://www.upm.es/))
+- Estación Biológica de Doñana ([EBD-CSIC](https://www.ebd.csic.es/))
+
+**Contributors:**
+
+- [Miguel Ángel Muñoz](https://orcid.org/0000-0001-6114-4460)
+- [Alfonso Allen-Perkins](https://orcid.org/0000-0003-3547-2190)
+- [Juan Manuel Pastor](https://orcid.org/0000-0002-1067-3642)
+- [Javier Galeano](https://orcid.org/0000-0003-0706-4317)
+- [Julia G. de Aledo](https://orcid.org/0000-0001-9065-9316)
+- [Ignasi Bartomeus](https://orcid.org/0000-0001-7893-4389)
+
+---
+
+## Citation
+<!--
 If you use **reserBUGS**, please cite the software:
 
 > reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*. Zenodo. https://doi.org/XXXX
 
 A formal publication describing the method is currently in preparation and will be added here once available.
+
+-->
 
 ---
 
@@ -593,7 +702,7 @@ A formal publication describing the method is currently in preparation and will 
 If you use BioTIME data, please cite:
 
 Dornelas, M. et al. (2025). **BioTIME 2.0: Expanding and Improving a Database of Biodiversity Time Series.** *Global Ecology and Biogeography*, 34(5), e70003.  
-https://doi.org/10.1111/geb.70003
+<https://doi.org/10.1111/geb.70003>
 
 ---
 

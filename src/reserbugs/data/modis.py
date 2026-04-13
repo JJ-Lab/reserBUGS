@@ -79,7 +79,6 @@ class ModisRetrieverConfig:
 
     short_name: str = "MOD13A3"
     version: str = "061"
-    # TODO: Eliminar ruta por defecto y plantear ruta temporal.
     local_path: Path = Path("modis_data")
     dataset_name: str = "1 km monthly NDVI"
     auth_strategy: str = "netrc"
