@@ -11,7 +11,7 @@ These data are derived from the **BioTIME database**, a global collection of bio
 BioTIME is a curated database of ecological time series describing changes in species abundances through time across marine, terrestrial, and freshwater systems.
 
 More information:
-https://doi.org/10.1111/geb.70003
+<https://doi.org/10.1111/geb.70003>
 
 ---
 
@@ -19,7 +19,7 @@ https://doi.org/10.1111/geb.70003
 
 This repository includes a small sample dataset:
 
-```
+```text
 data/sample/series_4_RESERBUGS_EXAMPLES.csv
 ```
 
@@ -97,4 +97,4 @@ If you use BioTIME data, please cite:
 Dornelas, M. et al. (2025).  
 *BioTIME 2.0: Expanding and Improving a Database of Biodiversity Time Series.*  
 Global Ecology and Biogeography, 34(5), e70003.  
-https://doi.org/10.1111/geb.70003
+<https://doi.org/10.1111/geb.70003>

@@ -419,7 +419,7 @@ class ReservoirComputing:
         if len(y_hist) < n_lags:
             raise ValueError(f"Y_init must have at least {n_lags} values; got {len(y_hist)}.")
     
-        T = len(X_test)
+        
         seeds = [base_seed + i for i in range(N)]
     
         base_kwargs = dict(

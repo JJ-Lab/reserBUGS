@@ -500,7 +500,7 @@ def plot_type_m_errors(true_value: pd.Series, estimate: np.ndarray, steps, per_s
     fig = go.Figure(layout=dict(width=900, height=500))
 
     # Add one violin per step, but use ground_truth index labels
-    for step, label, errs in zip(steps, step_labels, per_step_errs):
+    for _, label, errs in zip(steps, step_labels, per_step_errs):
         fig.add_trace(go.Violin(
             y=errs,
             x=[label] * len(errs),   # use ground_truth index value instead of step number

@@ -45,7 +45,7 @@ from __future__ import annotations
 from scipy.stats import norm
 import numpy as np
 
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
 import pandas as pd
 
@@ -58,7 +58,7 @@ __all__ = [
 ArrayLike1D = Union[np.ndarray, pd.Series]
 ArrayLike2D = Union[np.ndarray, pd.DataFrame]
 
-
+# TODO: Esto no se usa. Preguntar a Alf.
 def _sign_with_tolerance(a: np.ndarray, eps: float) -> np.ndarray:
     """
     Return sign with tolerance:
@@ -78,7 +78,9 @@ def wilson_score_interval(
     confidence_level: float = 0.95,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Vectorized Wilson score interval for binomial proportions.
+    Vectorized Wilson score interval for binomial proportions. 
+    Method adapted from Probable Inference, the Law of Succession, and Statistical Inference (Wilson, 1927).
+
 
     Parameters
     ----------
@@ -440,9 +442,9 @@ def scoring_rules(true_value: np.ndarray,
     - CRPS (Continuous Ranked Probability Score), which measures the overall
       agreement between the predictive distribution and the observation
     - DSS (Dawid-Sebastiani Score), which evaluates sharpness and calibration
-      using the predictive mean and variance
+      using the predictive mean and variance. Described in 'On the Presentation of Bayesian Forecasts (Dawid and Sebastiani, 1999)'.
     - Interval Score (Winkler score), which evaluates the width and coverage
-      of a central prediction interval
+      of a central prediction interval. Described in ' Decision-Theoretic Approach to Interval Estimation (Winkler, 1972)'.
     
     Parameters
     ----------
@@ -504,7 +506,7 @@ def scoring_rules(true_value: np.ndarray,
     if not (0 < alpha < 1):
         raise ValueError("alpha must be between 0 and 1.")
 
-    n_paths, horizon = estimate.shape
+    _, horizon = estimate.shape
 
     if true_value.size < horizon:
         raise ValueError(
@@ -524,7 +526,7 @@ def scoring_rules(true_value: np.ndarray,
         # CRPS
         crps_value = _crps(y_t, samples_t)
 
-        # Dawid-Sebastiani Score
+        # Dawid-Sebastiani Score (DSS)
         mu_t = np.mean(samples_t)
         sigma2_t = np.var(samples_t, ddof=1)
         sigma2_t = max(sigma2_t, eps)

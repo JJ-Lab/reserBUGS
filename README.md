@@ -64,9 +64,7 @@ The tool is based on reservoir computing, a modelling approach well suited for e
 
 ---
 
-## Minimal example
-
-Run a simple reservoir computing model on synthetic data:
+## Minimal example on synthetic data
 
 ```python
 from reserbugs import ReservoirComputing
@@ -181,7 +179,7 @@ To acquire abiotic data from Copernicus, a valid account is required, along with
 ### 2. Get your API key
 
 1. Visit your profile: <https://cds.climate.copernicus.eu/profile?tab=profile>
-2. Under **API key** section, copy your personal access token (you may need to accept the terms first)
+2. Under **API key** section, copy your personal access token (you may need to accept the terms first) to be used in the `.cdsapirc` config file.
 
 ---
 
@@ -261,25 +259,6 @@ cds.retrieve(
 
 ---
 
-<!--
-# TODO: Mejorar proceso de explicación
-# Creación de cuenta
-# Mail de confirmacion
-# Enlace a https://urs.earthdata.nasa.gov/profile
-# Applications/Authorized Apps y autorizar desde la web
-# LP DAAC Cumulus PROD
-
-# Creación de .netrc
-
-'''
-(
-echo machine: example.com &
-echo login: USERNAME &
-echo password: PASSWORD 
-) >> "%USERPROFILE%\.netrc2"
-'''
--->
-
 ## MODIS (NDVI) via NASA Earthdata (AppEEARS)
 
 ### 1. Create an Earthdata account
@@ -335,7 +314,7 @@ nano ~/.netrc
 Create the file at:
 
 ``` text
-C:\Users\<Username>\.netrc
+C:\Users\<Username>\_netrc
 ```
 
 ---
@@ -375,7 +354,7 @@ config = ModisRetrieverConfig(
 
 This example retrieves MODIS NDVI values for a site. It first downloads Copernicus climate data to create the required `climate_data` table.
 
-> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`).
+> **Note:** This example assumes that `reserBUGS` is installed (e.g. `pip install -e .`). If you are working directly from the repository without installation, you may need to add `src/` to your Python path.
 
 ```python
 from pathlib import Path
@@ -676,7 +655,7 @@ reserBUGS does not redistribute Copernicus or NASA datasets by default.
 
 **Contributors:**
 
-- [Miguel Ángel Muñoz](https://orcid.org/0000-0001-6114-4460)
+- [Miguel A. Muñoz Mohedano](https://orcid.org/0000-0001-6114-4460)
 - [Alfonso Allen-Perkins](https://orcid.org/0000-0003-3547-2190)
 - [Juan Manuel Pastor](https://orcid.org/0000-0002-1067-3642)
 - [Javier Galeano](https://orcid.org/0000-0003-0706-4317)
@@ -686,14 +665,21 @@ reserBUGS does not redistribute Copernicus or NASA datasets by default.
 ---
 
 ## Citation
-<!--
+
 If you use **reserBUGS**, please cite the software:
 
-> reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*. Zenodo. https://doi.org/XXXX
+> reserBUGS contributors (2026). *reserBUGS: Reservoir computing for ecological forecasting*.
+
+```bibtex
+@online{reserBUGS,
+  title   = {reserBUGS: Reservoir computing for ecological forecasting},
+  author  = {},
+  year    = {2026},
+  url     = {https://github.com/JJ-Lab/reserBUGS}
+}
+```
 
 A formal publication describing the method is currently in preparation and will be added here once available.
-
--->
 
 ---
 
