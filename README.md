@@ -673,7 +673,14 @@ If you use **reserBUGS**, please cite the software:
 ```bibtex
 @online{reserBUGS,
   title   = {reserBUGS: Reservoir computing for ecological forecasting},
-  author  = {},
+    author = {
+    Muñoz Mohedano, Miguel A.
+    and Pastor, Juan Manuel
+    and Galeano, Javier
+    and {de Aledo}, Julia G.
+    and Bartomeus, Ignasi
+    and Allen-Perkins, Alfonso
+    },
   year    = {2026},
   url     = {https://github.com/JJ-Lab/reserBUGS}
 }
