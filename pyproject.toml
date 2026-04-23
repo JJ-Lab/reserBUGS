@@ -46,7 +46,7 @@ dependencies = [
   "pandas",
   "scipy",
   "scikit-learn",
-  "reservoirpy",
+  "reservoirpy==0.3.13.post1",
   "joblib",
   "threadpoolctl",
   "plotly",
