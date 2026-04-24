@@ -4,7 +4,7 @@
   <img src="assets/logo.jpeg" alt="reserBUGS Logo" width="200">
 </div>
 
-![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19728308.svg)](https://doi.org/10.5281/zenodo.19728308)
+![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19728308.svg)
 ![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Status](https://img.shields.io/badge/status-beta-yellow.svg)
